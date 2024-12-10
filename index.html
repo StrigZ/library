@@ -3,12 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styel.css" />
+    <link rel="stylesheet" href="./style.css" />
     <title>The Library</title>
   </head>
   <body>
     <h1>The Library</h1>
-    <ul class="library"></ul>
+
+    <ul class="library">
+      <li class="book">
+        <article>
+          <h2>Best Book</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel aut,
+            itaque rem ducimus adipisci consequatur.
+          </p>
+        </article>
+        <div>
+          <p>Pages: <span>255</span></p>
+          <div>
+            <label for="is-read">Has read</label>
+            <input type="checkbox" checked id="is-read" />
+          </div>
+        </div>
+      </li>
+    </ul>
     <script src="./index.js"></script>
   </body>
 </html>
