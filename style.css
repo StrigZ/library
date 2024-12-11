@@ -83,6 +83,23 @@ dialog {
     flex-direction: column;
     gap: 12px;
 
+    .form-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .form-control {
+        flex-direction: row;
+        align-items: center;
+        gap: 12pxs;
+
+        input[type="checkbox"] {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
     .form-control {
       display: flex;
       gap: 6px;
@@ -91,16 +108,6 @@ dialog {
       label {
         font-size: 1.25rem;
         font-weight: bold;
-      }
-    }
-
-    .form-control:last-of-type {
-      flex-direction: row;
-      align-items: center;
-      gap: 12pxs;
-      input {
-        width: 20px;
-        height: 20px;
       }
     }
   }
