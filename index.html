@@ -8,25 +8,36 @@
   </head>
   <body>
     <h1>The Library</h1>
+    <button type="button" id="add-book">Add Book</button>
+    <ul class="library"></ul>
 
-    <ul class="library">
-      <li class="book">
-        <article>
-          <h2>Best Book</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel aut,
-            itaque rem ducimus adipisci consequatur.
-          </p>
-        </article>
-        <div>
-          <p>Pages: <span>255</span></p>
-          <div>
-            <label for="is-read">Has read</label>
-            <input type="checkbox" checked id="is-read" />
+    <dialog>
+      <div class="overlay">
+        <form id="new-book-form" method="dialog">
+          <div class="form-control">
+            <label for="title">Title</label>
+            <input id="title" type="text" required />
           </div>
-        </div>
-      </li>
-    </ul>
+          <div class="form-control">
+            <label for="description">Description</label>
+            <input id="description" type="text" required />
+          </div>
+          <div class="form-control">
+            <label for="author">Author</label>
+            <input id="author" type="text" required />
+          </div>
+          <div class="form-control">
+            <label for="pages">Pages</label>
+            <input id="pages" type="number" min="0" required />
+          </div>
+          <div class="form-control">
+            <label for="hasRead">Has Read:</label
+            ><input id="hasRead" type="checkbox" />
+          </div>
+          <button>Add</button>
+        </form>
+      </div>
+    </dialog>
     <script src="./index.js"></script>
   </body>
 </html>

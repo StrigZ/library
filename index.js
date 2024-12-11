@@ -1,4 +1,8 @@
 const libraryEle = document.querySelector(".library");
+const addBookButton = document.querySelector("#add-book");
+const modalEle = document.querySelector("dialog");
+const modalOverlay = document.querySelector(".overlay");
+const newBookForm = document.querySelector("#new-book-form");
 
 const myLibrary = [];
 
@@ -11,9 +15,9 @@ function Book(title, description, author, pages, isRead) {
   this.isRead = isRead;
 }
 
-function addBookToLibrary(bookArray) {
+function addBookToLibrary(book) {
   // do stuff here
-  bookArray.forEach((book) => myLibrary.push(book));
+  myLibrary.push(book);
 }
 
 function createBookCard(book) {
@@ -22,10 +26,10 @@ function createBookCard(book) {
   const description = document.createElement("p");
   const article = document.createElement("article");
 
-  //   book stats
+  // book stats
   const bookStats = document.createElement("div");
 
-  //   amount of pages
+  // amount of pages
   const pagesAmount = document.createElement("p");
   const pagesSpan = document.createElement("span");
 
@@ -53,7 +57,9 @@ function createBookCard(book) {
   hasReadLabel.setAttribute("for", `has-read-${book.title}`);
   hasReadCheckbox.setAttribute("type", "checkbox");
   hasReadCheckbox.setAttribute("id", `has-read-${book.title}`);
-  hasReadCheckbox.setAttribute("checked", book.isRead);
+
+  hasReadCheckbox.checked = book.isRead;
+
   hasReadDiv.append(hasReadLabel, hasReadCheckbox);
 
   bookStats.append(pagesAmount, hasReadDiv);
@@ -64,83 +70,47 @@ function createBookCard(book) {
 }
 
 function updateLibraryUI() {
+  libraryEle.innerHTML = "";
   myLibrary.forEach((book) => {
     createBookCard(book);
   });
 }
 
-addBookToLibrary([
-  new Book(
-    "The Bestest Book1",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book2",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book3",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book4",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book5",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book6",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book7",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book8",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book9",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-  new Book(
-    "The Bestest Book10",
-    "The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description The Bestest description",
-    "Bro",
-    6969,
-    true
-  ),
-]);
-updateLibraryUI();
+function resetForm() {
+  document.querySelector("#title").value = "";
+  document.querySelector("#description").value = "";
+  document.querySelector("#author").value = "";
+  document.querySelector("#pages").value = "";
+  document.querySelector("#hasRead").removeAttribute("checked");
+}
 
-console.log(myLibrary);
+function createBookFromFrom() {
+  const title = document.querySelector("#title").value;
+  const description = document.querySelector("#description").value;
+  const author = document.querySelector("#author").value;
+  const pages = document.querySelector("#pages").value;
+  const hasRead = document.querySelector("#hasRead").checked;
+
+  const newBook = new Book(title, description, author, pages, hasRead);
+
+  resetForm();
+
+  return newBook;
+}
+
+addBookButton.addEventListener("click", () => {
+  modalEle.showModal();
+});
+
+modalEle.addEventListener("click", () => {
+  modalEle.close();
+});
+
+modalOverlay.addEventListener("click", (e) => e.stopPropagation());
+
+newBookForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  addBookToLibrary(createBookFromFrom());
+  updateLibraryUI();
+  modalEle.close();
+});
