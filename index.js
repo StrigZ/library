@@ -14,8 +14,6 @@ function Book(title, description, author, pages, isRead) {
   this.author = author;
   this.pages = pages;
   this.isRead = isRead;
-
-  console.log(this.id);
 }
 
 function addBookToLibrary(book) {
@@ -24,12 +22,23 @@ function addBookToLibrary(book) {
 }
 
 function createBookCard(book) {
-  // article
+  // Create DOM elements
   const title = document.createElement("h2");
   const description = document.createElement("p");
   const article = document.createElement("article");
   const deleteBookButton = document.createElement("button");
+  const bookStats = document.createElement("div");
+  const pagesAmountParagraph = document.createElement("p");
+  const pagesAmountSpan = document.createElement("span");
+  const hasReadDiv = document.createElement("div");
+  const hasReadLabel = document.createElement("label");
+  const hasReadCheckbox = document.createElement("input");
+  const unreadButton = document.createElement("button");
+  const listItem = document.createElement("li");
+
+  // Modify article elements and append them
   deleteBookButton.textContent = "DELETE";
+  deleteBookButton.classList.add("delete-button");
   deleteBookButton.addEventListener("click", () => {
     const id = myLibrary.findIndex((b) => b.id === book.id);
     console.log(id);
@@ -39,43 +48,28 @@ function createBookCard(book) {
       updateLibraryUI();
     }
   });
-
-  // book stats
-  const bookStats = document.createElement("div");
-
-  // amount of pages
-  const pagesAmount = document.createElement("p");
-  const pagesSpan = document.createElement("span");
-
-  // has read
-  const hasReadDiv = document.createElement("div");
-  const hasReadLabel = document.createElement("label");
-  const hasReadCheckbox = document.createElement("input");
-
-  const listItem = document.createElement("li");
-
-  // article
   title.textContent = book.title;
   description.textContent = book.description;
   article.append(title, deleteBookButton, description);
 
-  //   book stats
-  //   amount of pages
-  pagesAmount.textContent = "Pages: ";
-  pagesSpan.textContent = book.pages;
-  pagesAmount.append(pagesSpan);
-
-  // has read div
+  //   Modify book stats elements and append them
+  pagesAmountParagraph.textContent = "Pages: ";
+  pagesAmountSpan.textContent = book.pages;
+  pagesAmountParagraph.append(pagesAmountSpan);
   hasReadLabel.textContent = "Has read";
   hasReadLabel.setAttribute("for", `has-read-${book.title}`);
   hasReadCheckbox.setAttribute("type", "checkbox");
   hasReadCheckbox.setAttribute("id", `has-read-${book.title}`);
-
   hasReadCheckbox.checked = book.isRead;
-
-  hasReadDiv.append(hasReadLabel, hasReadCheckbox);
-
-  bookStats.append(pagesAmount, hasReadDiv);
+  hasReadCheckbox.disabled = true;
+  unreadButton.textContent = book.isRead ? "Unread" : "Read";
+  unreadButton.setAttribute("type", "button");
+  unreadButton.addEventListener("click", () => {
+    book.isRead = !book.isRead;
+    updateLibraryUI();
+  });
+  hasReadDiv.append(hasReadLabel, hasReadCheckbox, unreadButton);
+  bookStats.append(pagesAmountParagraph, hasReadDiv);
 
   listItem.append(article, bookStats);
   listItem.classList.add("book");
