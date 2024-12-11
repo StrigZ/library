@@ -40,13 +40,14 @@ function createBookCard(book) {
   deleteBookButton.textContent = "DELETE";
   deleteBookButton.classList.add("delete-button");
   deleteBookButton.addEventListener("click", () => {
-    const id = myLibrary.findIndex((b) => b.id === book.id);
-    console.log(id);
+    const index = myLibrary.findIndex((b) => b.id === book.id);
 
-    if (id !== -1) {
-      myLibrary.splice(id, 1);
-      updateLibraryUI();
+    if (index === -1) {
+      return;
     }
+
+    myLibrary.splice(index, 1);
+    updateLibraryUI();
   });
   title.textContent = book.title;
   description.textContent = book.description;
