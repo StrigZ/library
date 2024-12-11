@@ -113,7 +113,7 @@ modalEle.addEventListener("click", () => {
   modalEle.close();
 });
 
-modalOverlay.addEventListener("click", (e) => e.stopPropagation());
+newBookForm.addEventListener("click", (e) => e.stopPropagation());
 
 newBookForm.addEventListener("submit", (e) => {
   e.preventDefault();
