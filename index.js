@@ -8,11 +8,14 @@ const myLibrary = [];
 
 function Book(title, description, author, pages, isRead) {
   // the constructor...
+  this.id = Math.random().toString().split(".")[1];
   this.title = title;
   this.description = description;
   this.author = author;
   this.pages = pages;
   this.isRead = isRead;
+
+  console.log(this.id);
 }
 
 function addBookToLibrary(book) {
@@ -25,6 +28,17 @@ function createBookCard(book) {
   const title = document.createElement("h2");
   const description = document.createElement("p");
   const article = document.createElement("article");
+  const deleteBookButton = document.createElement("button");
+  deleteBookButton.textContent = "DELETE";
+  deleteBookButton.addEventListener("click", () => {
+    const id = myLibrary.findIndex((b) => b.id === book.id);
+    console.log(id);
+
+    if (id !== -1) {
+      myLibrary.splice(id, 1);
+      updateLibraryUI();
+    }
+  });
 
   // book stats
   const bookStats = document.createElement("div");
@@ -43,8 +57,7 @@ function createBookCard(book) {
   // article
   title.textContent = book.title;
   description.textContent = book.description;
-  article.append(title);
-  article.append(description);
+  article.append(title, deleteBookButton, description);
 
   //   book stats
   //   amount of pages
