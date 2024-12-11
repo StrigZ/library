@@ -88,7 +88,7 @@ function resetForm() {
   document.querySelector("#description").value = "";
   document.querySelector("#author").value = "";
   document.querySelector("#pages").value = "";
-  document.querySelector("#hasRead").removeAttribute("checked");
+  document.querySelector("#hasRead").checked = false;
 }
 
 function createBookFromFrom() {
