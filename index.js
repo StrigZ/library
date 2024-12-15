@@ -4,23 +4,6 @@ const modalEle = document.querySelector("dialog");
 const modalOverlay = document.querySelector(".overlay");
 const newBookForm = document.querySelector("#new-book-form");
 
-const myLibrary = [];
-
-function Book(title, description, author, pages, isRead) {
-  // the constructor...
-  this.id = Math.random().toString().split(".")[1];
-  this.title = title;
-  this.description = description;
-  this.author = author;
-  this.pages = pages;
-  this.isRead = isRead;
-}
-
-function addBookToLibrary(book) {
-  // do stuff here
-  myLibrary.push(book);
-}
-
 function createBookCard(book) {
   // Create DOM elements
   const title = document.createElement("h2");
@@ -40,13 +23,7 @@ function createBookCard(book) {
   deleteBookButton.textContent = "DELETE";
   deleteBookButton.classList.add("delete-button");
   deleteBookButton.addEventListener("click", () => {
-    const index = myLibrary.findIndex((b) => b.id === book.id);
-
-    if (index === -1) {
-      return;
-    }
-
-    myLibrary.splice(index, 1);
+    myLibrary.removeBookFromLibrary(book.id);
     updateLibraryUI();
   });
   title.textContent = book.title;
@@ -79,7 +56,7 @@ function createBookCard(book) {
 
 function updateLibraryUI() {
   libraryEle.innerHTML = "";
-  myLibrary.forEach((book) => {
+  myLibrary.books.forEach((book) => {
     createBookCard(book);
   });
 }
@@ -118,7 +95,40 @@ newBookForm.addEventListener("click", (e) => e.stopPropagation());
 
 newBookForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  addBookToLibrary(createBookFromFrom());
+  myLibrary.addBookToLibrary(createBookFromFrom());
   updateLibraryUI();
   modalEle.close();
 });
+
+class Book {
+  constructor(title, description, author, pages, isRead) {
+    this.id = Math.random().toString().split(".")[1];
+    this.title = title;
+    this.description = description;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+  }
+}
+
+class Library {
+  constructor(books = []) {
+    this.books = books;
+  }
+
+  addBookToLibrary(newBook) {
+    this.books.push(newBook);
+  }
+
+  removeBookFromLibrary(id) {
+    const index = this.books.findIndex((b) => b.id === id);
+
+    if (index === -1) {
+      return;
+    }
+
+    this.books.splice(index, 1);
+  }
+}
+
+const myLibrary = new Library();
