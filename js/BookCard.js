@@ -1,3 +1,5 @@
+import { myLibrary, updateLibraryUI } from "../index.js";
+
 export default function BookCard({ title, description, id, pages, isRead }) {
   // Create DOM elements
   const titleEle = document.createElement("h2");
@@ -37,7 +39,7 @@ export default function BookCard({ title, description, id, pages, isRead }) {
   unreadButton.textContent = isRead ? "Unread" : "Read";
   unreadButton.setAttribute("type", "button");
   unreadButton.addEventListener("click", () => {
-    isRead = !isRead;
+    myLibrary.toggleBookReadStatus(id);
     updateLibraryUI();
   });
   hasReadDiv.append(hasReadLabel, hasReadCheckbox, unreadButton);

@@ -5,13 +5,12 @@ const addBookButton = document.querySelector("#add-book");
 const modalEle = document.querySelector("dialog");
 const newBookForm = document.querySelector("#new-book-form");
 
-function updateLibraryUI() {
+export function updateLibraryUI() {
   libraryEle.innerHTML = "";
   myLibrary.books.forEach((book) => {
     libraryEle.append(BookCard(book));
   });
 }
-
 function resetForm() {
   document.querySelector("#title").value = "";
   document.querySelector("#description").value = "";
@@ -66,6 +65,10 @@ class Library {
   constructor(books = []) {
     this.books = books;
   }
+  toggleBookReadStatus(bookId) {
+    const booksToChange = this.books.find(({ id }) => id === bookId);
+    booksToChange.isRead = !booksToChange.isRead;
+  }
 
   addBookToLibrary(newBook) {
     this.books.push(newBook);
@@ -83,3 +86,4 @@ class Library {
 }
 
 const myLibrary = new Library();
+export { myLibrary };
