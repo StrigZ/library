@@ -14,11 +14,7 @@ export function updateLibraryUI() {
   });
 }
 function resetForm() {
-  document.querySelector("#title").value = "";
-  document.querySelector("#description").value = "";
-  document.querySelector("#author").value = "";
-  document.querySelector("#pages").value = "";
-  document.querySelector("#hasRead").checked = false;
+  newBookForm.reset();
 }
 
 function createBookFromFrom() {
