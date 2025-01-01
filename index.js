@@ -13,34 +13,40 @@ export function updateLibraryUI() {
     libraryEle.append(BookCard(book));
   });
 }
+
 function resetForm() {
   newBookForm.reset();
 }
 
-function createBookFromFrom() {
+const getFormData = () => {
   const title = document.querySelector("#title").value;
   const description = document.querySelector("#description").value;
   const author = document.querySelector("#author").value;
   const pages = document.querySelector("#pages").value;
   const hasRead = document.querySelector("#hasRead").checked;
 
-  const newBook = new Book(title, description, author, pages, hasRead);
+  return {
+    title,
+    description,
+    author,
+    pages,
+    hasRead,
+  };
+};
 
+function createBookFromFrom() {
+  const { title, description, author, pages, hasRead } = getFormData();
   resetForm();
-
-  return newBook;
+  return new Book(title, description, author, pages, hasRead);
 }
 
 addBookButton.addEventListener("click", () => {
   modalEle.showModal();
 });
-
 modalEle.addEventListener("click", () => {
   modalEle.close();
 });
-
 newBookForm.addEventListener("click", (e) => e.stopPropagation());
-
 newBookForm.addEventListener("submit", (e) => {
   e.preventDefault();
   myLibrary.addBookToLibrary(createBookFromFrom());
