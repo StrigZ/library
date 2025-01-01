@@ -2,15 +2,15 @@ import BookCard from "./js/BookCard.js";
 import Book from "./js/classes/Book.js";
 import Library from "./js/classes/Library.js";
 
-const libraryEle = document.querySelector(".library");
-const addBookButton = document.querySelector("#add-book");
+const libraryContainer = document.querySelector(".library");
+const openNewBookFormBtn = document.querySelector("#add-book");
 const modalEle = document.querySelector("dialog");
 const newBookForm = document.querySelector("#new-book-form");
 
 export function updateLibraryUI() {
-  libraryEle.innerHTML = "";
+  libraryContainer.innerHTML = "";
   myLibrary.books.forEach((book) => {
-    libraryEle.append(BookCard(book));
+    libraryContainer.append(BookCard(book));
   });
 }
 
@@ -40,7 +40,7 @@ function createBookFromFrom() {
   return new Book(title, description, author, pages, hasRead);
 }
 
-addBookButton.addEventListener("click", () => {
+openNewBookFormBtn.addEventListener("click", () => {
   modalEle.showModal();
 });
 modalEle.addEventListener("click", () => {
