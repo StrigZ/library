@@ -1,4 +1,6 @@
 import BookCard from "./js/BookCard.js";
+import Book from "./js/classes/Book.js";
+import Library from "./js/classes/Library.js";
 
 const libraryEle = document.querySelector(".library");
 const addBookButton = document.querySelector("#add-book");
@@ -49,41 +51,6 @@ newBookForm.addEventListener("submit", (e) => {
   updateLibraryUI();
   modalEle.close();
 });
-
-class Book {
-  constructor(title, description, author, pages, isRead) {
-    this.id = Math.random().toString().split(".")[1];
-    this.title = title;
-    this.description = description;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-  }
-}
-
-class Library {
-  constructor(books = []) {
-    this.books = books;
-  }
-  toggleBookReadStatus(bookId) {
-    const booksToChange = this.books.find(({ id }) => id === bookId);
-    booksToChange.isRead = !booksToChange.isRead;
-  }
-
-  addBookToLibrary(newBook) {
-    this.books.push(newBook);
-  }
-
-  removeBookFromLibrary(id) {
-    const index = this.books.findIndex((b) => b.id === id);
-
-    if (index === -1) {
-      return;
-    }
-
-    this.books.splice(index, 1);
-  }
-}
 
 const myLibrary = new Library();
 export { myLibrary };
